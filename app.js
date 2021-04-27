@@ -72,7 +72,8 @@ class App{
             elevation.closest('.form__row').classList.toggle('form__row--hidden');
             inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
         })
-
+        
+        document.querySelector('.workouts').addEventListener("click", this._moveToPopup.bind(this));
     }
 
     _getPosition(){
@@ -138,9 +139,6 @@ class App{
 
         // if type  = cycling
         if (type === 'cycling'){
-            console.log(type)
-            console.log(distance)
-            console.log(duration)
             let inputElevation = +elevation.value;  
             if (
                 !isValid(distance,duration,inputElevation) || 
@@ -159,6 +157,11 @@ class App{
         
         // hide form after rendering workout
         this._hideform()
+
+        // store data in local storage of browser
+        this._setLocalStorage()
+
+        this._getStorageData()
     }
 
     _hideform(){
@@ -201,7 +204,6 @@ class App{
                 `;
             
         if(workout.type === "cycling"){
-            console.log("cycling is run")
             html += `<div class="workout__details">
                         <span class="workout__icon"></span>
                         <span class="workout__value">${workout.speed.toFixed(1)}</span>
@@ -235,8 +237,29 @@ class App{
     _moveToPopup(e){
         const workoutEl = e.target.closest(".workout");
         console.log(workoutEl)
+
+        if(!workoutEl){
+            return;
+        }
+
+        const workout = this.#workout.find(work => work.id === workoutEl.dataset.id)
+
+        this.#map.setView(workout.coord,13, {
+            animate: true,
+            pan: {
+                duration: 1
+            }
+        })
     }
 
+    _setLocalStorage(){
+        localStorage.setItem('workouts', JSON.stringify(this.#workout))
+    }
+
+    _getStorageData(){
+        const data = JSON.parse(localStorage.getItem('workouts'));
+        console.log(data)
+    }
 }
 
 const app = new App();

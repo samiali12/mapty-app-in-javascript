@@ -86,14 +86,14 @@ body{
 }
 
 .workout__icon {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin-right: 0.2rem;
   height: 0.28rem;
 }
 
 .workout__value {
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
+  font-size: 1.3rem;
+  margin-right: 0.3rem;
 }
 
 .workout__unit {

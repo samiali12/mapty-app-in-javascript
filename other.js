@@ -1,1 +1,0 @@
-const firstName = "Sami Ali"
